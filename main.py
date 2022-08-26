@@ -4,46 +4,7 @@ from PyQt5.QtWidgets import (QMainWindow, QApplication, QWidget, QHBoxLayout,
                              QFrame, QGraphicsDropShadowEffect, QSizePolicy)
 from PyQt5.QtCore import QObject, QEvent, Qt
 from PyQt5.QtGui import QColor
-
-
-def apply_shadow(widget: QWidget, radius: float):
-    shadow = QGraphicsDropShadowEffect()
-    shadow.setBlurRadius(radius)
-    shadow.setColor(Qt.black)
-    shadow.setOffset(0, 0)
-    widget.setGraphicsEffect(shadow)
-
-
-def apply_font(widget: QWidget, size: int, bold: bool = False,
-               italic: bool = False):
-    f = widget.font()
-    f.setFamily("Century Gothic")
-    f.setBold(bold)
-    f.setItalic(italic)
-    f.setPixelSize(size)
-    widget.setFont(f)
-
-
-class Toolbar(QFrame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.setStyleSheet("background-color: #008396")
-        self.setFixedHeight(120)
-        apply_shadow(self, 100)
-        grid = QHBoxLayout()
-        grid.setContentsMargins(12, 12, 12, 12)
-        grid.setSpacing(12)
-
-        self._b_back = QPushButton("Back", self)
-        self._b_back.setFixedWidth(216)
-        self._b_back.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        apply_font(self._b_back, 72)
-        self._b_back.setStyleSheet(
-            "background-color: #2F4858; color: white; border: none;")
-        apply_shadow(self._b_back, 10)
-        grid.addWidget(self._b_back)
-        grid.addStretch(1)
-        self.setLayout(grid)
+from title_bar import TitleBar
 
 
 class MainWidget(QWidget):
@@ -53,7 +14,7 @@ class MainWidget(QWidget):
         grid.setContentsMargins(0, 0, 0, 0)
         grid.setSpacing(0)
         f = QFrame(self)
-        grid.addWidget(Toolbar(self))
+        grid.addWidget(TitleBar(self))
         f.setStyleSheet("background-color: #2F4858")
         grid.addWidget(f)
         self.setLayout(grid)
